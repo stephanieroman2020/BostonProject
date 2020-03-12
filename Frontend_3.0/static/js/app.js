@@ -15,37 +15,37 @@ var chartWidth = svgWidth - chartMargin.left - chartMargin.right;
 var chartHeight = svgHeight - chartMargin.top - chartMargin.bottom;
 
 // Select body, append SVG area to it, and set the dimensions
-var svg = d3.selectAll("body")
+var svg = d3.select("body")
   .append("svg")
   .attr("height", svgHeight)
   .attr("width", svgWidth);
 
 // Append a group to the SVG area and shift ('translate') it to the right and to the bottom
-var chartGroup1 = svg.append("g")
+var chartGroup = svg.append("g")
   .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
 
-// Load data from Trash-of-tv-watched.csv
-console.log("trash ");
+// Load data from noise_complaints-of-tv-watched.csv
+console.log("noise test  ");
 
-d3.csv("static/data/trash_monthly.csv").then(function(trashData) {
+d3.csv("static/data/noise_monthly.csv").then(function(noiseData) {
 
 
-  console.log(trashData);
+  console.log(noiseData);
 
-  // Cast the Trash value to a number for each piece of trashData
-  trashData.forEach(function(e) {
-    e.Trash = +e.Trash;
+  // Cast the noise_complaints value to a number for each piece of noiseData
+  noiseData.forEach(function(d) {
+    d.noise_complaints = +d.noise_complaints;
   });
 
   // Configure a band scale for the horizontal axis with a padding of 0.1 (10%)
   var xBandScale = d3.scaleBand()
-    .domain(trashData.map(e => e.month))
+    .domain(noiseData.map(d => d.month))
     .range([0, chartWidth])
     .padding(0.1);
 
   // Create a linear scale for the vertical axis.
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(trashData, e => e.Trash)])
+    .domain([0, d3.max(noiseData, d => d.noise_complaints)])
     .range([chartHeight, 0]);
 
   // Create two new functions passing our scales in as arguments
@@ -53,26 +53,37 @@ d3.csv("static/data/trash_monthly.csv").then(function(trashData) {
   var bottomAxis = d3.axisBottom(xBandScale);
   var leftAxis = d3.axisLeft(yLinearScale).ticks(10);
 
-  // Append two SVG group elements to the chartGroup1 area,
+  // Append two SVG group elements to the chartGroup area,
   // and create the bottom and left axes inside of them
-  chartGroup1.append("g")
+  chartGroup.append("g")
     .call(leftAxis);
 
-  chartGroup1.append("g")
+  chartGroup.append("g")
     .attr("transform", `translate(0, ${chartHeight})`)
     .call(bottomAxis);
 
-  // Create one SVG rectangle per piece of trashData
+  // Create one SVG rectangle per piece of noiseData
   // Use the linear and band scales to position each rectangle within the chart
-  chartGroup1.selectAll(".bar1")
-    .data(trashData)
+  chartGroup.selectAll(".bar")
+    .data(noiseData)
     .enter()
     .append("rect")
-    .attr("class", "bar1")
-    .attr("x", e => xBandScale(e.month))
-    .attr("y", e => yLinearScale(e.Trash))
+    .attr("class", "bar")
+    .attr("x", d => xBandScale(d.month))
+    .attr("y", d => yLinearScale(d.noise_complaints))
     .attr("width", xBandScale.bandwidth())
-    .attr("height", e => chartHeight - yLinearScale(e.Trash));
+    .attr("height", d => chartHeight - yLinearScale(d.noise_complaints));
+
+  // Create axes labels
+  chartGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left + 40)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .attr("class", "axisText")
+    .text("Noise Complaints");
+
+
 
 }).catch(function(error) {
   console.log(error);
