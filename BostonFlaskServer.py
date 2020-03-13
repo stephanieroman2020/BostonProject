@@ -21,6 +21,6 @@ def trash():
     if request.method == 'GET':
         df3 = pd.read_sql_query("select * from TrashTable limit 5;", connection)
        
-
-    return df3.to_json()
+    return render_template('webpage_d3 - 2.1.html')
+   #return df3.to_json()
 
