@@ -27,7 +27,9 @@ var chartGroup2 = svg.append("g")
 // Load data from Rodents-of-tv-watched.csv
 console.log("Rodents ");
 
-d3.csv("static/data/Rodents_monthly.csv").then(function(RodentsData) {
+
+var rodents_chart_url = window.location.origin.concat('/rodents_monthly');
+d3.csv(rodents_chart_url).then(function(RodentsData) {
 
 
   console.log(RodentsData);

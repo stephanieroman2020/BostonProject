@@ -27,7 +27,8 @@ var chartGroup = svg.append("g")
 // Load data from noise_complaints-of-tv-watched.csv
 console.log("noise test  ");
 
-d3.csv("static/data/noise_monthly.csv").then(function(noiseData) {
+var noise_chart_url = window.location.origin.concat('/noise_monthly');
+d3.csv(noise_chart_url).then(function(noiseData) {
 
 
   console.log(noiseData);

@@ -35,5 +35,26 @@ def neighborhoods():
     neighborhoods_json=json.load(neighborhoods_file)
     return json.dumps(neighborhoods_json)
 
+@app.route('/schools')
+def schools():
+    schools_file=open("static/data/colleges2.geojson", 'r')
+    schools_json=json.load(schools_file)
+    return json.dumps(schools_json)
+
+@app.route('/noise_monthly')
+def noiseChart():
+    noise_chart_data=pd.read_csv("static/data/noise_monthly.csv")
+    return noise_chart_data.to_csv()
+
+@app.route('/trash_monthly')
+def trashChart():
+    trash_chart_data=pd.read_csv("static/data/trash_monthly.csv")
+    return trash_chart_data.to_csv()
+
+@app.route('/rodents_monthly')
+def rodentsChart():
+    rodents_chart_data=pd.read_csv("static/data/rodents_monthly.csv")
+    return rodents_chart_data.to_csv()
+
 if __name__ == "__main__":
     app.run(debug=True)

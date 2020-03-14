@@ -35,7 +35,8 @@ var boston = d3.json(link, function(data) {
 
 
 // SCHOOL MARKERS LAYER
-var schoolpath = "static/data/colleges2.geojson";
+//var schoolpath = "static/data/colleges2.geojson";
+var schoolpath =window.location.origin.concat("/schools");
 console.log("schools initiated");
 
 // var schools = new L.LayerGroup();

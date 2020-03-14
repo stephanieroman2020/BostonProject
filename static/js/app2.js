@@ -21,13 +21,17 @@ var svg = d3.selectAll("body")
   .attr("width", svgWidth);
 
 // Append a group to the SVG area and shift ('translate') it to the right and to the bottom
+
+
 var chartGroup1 = svg.append("g")
   .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
 
 // Load data from Trash-of-tv-watched.csv
 console.log("trash ");
 
-d3.csv("static/data/trash_monthly.csv").then(function(trashData) {
+
+var trash_chart_url = window.location.origin.concat('/trash_monthly');
+d3.csv(trash_chart_url).then(function(trashData) {
 
 
   console.log(trashData);
