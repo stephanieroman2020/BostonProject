@@ -15,37 +15,39 @@ var chartWidth = svgWidth - chartMargin.left - chartMargin.right;
 var chartHeight = svgHeight - chartMargin.top - chartMargin.bottom;
 
 // Select body, append SVG area to it, and set the dimensions
-var svg = d3.select("body")
+var svg = d3.selectAll("body")
   .append("svg")
   .attr("height", svgHeight)
   .attr("width", svgWidth);
 
 // Append a group to the SVG area and shift ('translate') it to the right and to the bottom
-var chartGroup = svg.append("g")
+var chartGroup2 = svg.append("g")
   .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
 
-// Load data from noise_complaints-of-tv-watched.csv
-console.log("noise test  ");
-
-d3.csv("static/data/noise_monthly.csv").then(function(noiseData) {
+// Load data from Rodents-of-tv-watched.csv
+console.log("Rodents ");
 
 
-  console.log(noiseData);
+var rodents_chart_url = window.location.origin.concat('/rodents_monthly');
+d3.csv(rodents_chart_url).then(function(RodentsData) {
 
-  // Cast the noise_complaints value to a number for each piece of noiseData
-  noiseData.forEach(function(d) {
-    d.noise_complaints = +d.noise_complaints;
+
+  console.log(RodentsData);
+
+  // Cast the Rodents value to a number for each piece of RodentsData
+  RodentsData.forEach(function(d) {
+    d.Rodents = +d.Rodents;
   });
 
   // Configure a band scale for the horizontal axis with a padding of 0.1 (10%)
   var xBandScale = d3.scaleBand()
-    .domain(noiseData.map(d => d.month))
+    .domain(RodentsData.map(d => d.month))
     .range([0, chartWidth])
     .padding(0.1);
 
   // Create a linear scale for the vertical axis.
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(noiseData, d => d.noise_complaints)])
+    .domain([0, d3.max(RodentsData, d => d.Rodents)])
     .range([chartHeight, 0]);
 
   // Create two new functions passing our scales in as arguments
@@ -53,37 +55,26 @@ d3.csv("static/data/noise_monthly.csv").then(function(noiseData) {
   var bottomAxis = d3.axisBottom(xBandScale);
   var leftAxis = d3.axisLeft(yLinearScale).ticks(10);
 
-  // Append two SVG group elements to the chartGroup area,
+  // Append two SVG group elements to the chartGroup2 area,
   // and create the bottom and left axes inside of them
-  chartGroup.append("g")
+  chartGroup2.append("g")
     .call(leftAxis);
 
-  chartGroup.append("g")
+  chartGroup2.append("g")
     .attr("transform", `translate(0, ${chartHeight})`)
     .call(bottomAxis);
 
-  // Create one SVG rectangle per piece of noiseData
+  // Create one SVG rectangle per piece of RodentsData
   // Use the linear and band scales to position each rectangle within the chart
-  chartGroup.selectAll(".bar")
-    .data(noiseData)
+  chartGroup2.selectAll(".bar2")
+    .data(RodentsData)
     .enter()
     .append("rect")
-    .attr("class", "bar")
+    .attr("class", "bar2")
     .attr("x", d => xBandScale(d.month))
-    .attr("y", d => yLinearScale(d.noise_complaints))
+    .attr("y", d => yLinearScale(d.Rodents))
     .attr("width", xBandScale.bandwidth())
-    .attr("height", d => chartHeight - yLinearScale(d.noise_complaints));
-
-  // Create axes labels
-  chartGroup.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left + 40)
-    .attr("x", 0 - (height / 2))
-    .attr("dy", "1em")
-    .attr("class", "axisText")
-    .text("Noise Complaints");
-
-
+    .attr("height", d => chartHeight - yLinearScale(d.Rodents));
 
 }).catch(function(error) {
   console.log(error);
