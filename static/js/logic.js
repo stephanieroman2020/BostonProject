@@ -20,8 +20,8 @@
 // });
 
 // Grabbing Neighborhood GeoJSON data..
-var link = "static/data/Boston_Neighborhoods.geojson";
-
+//var link = "static/data/Boston_Neighborhoods.geojson";
+var link = window.location.origin.concat("/neighborhoods");
 var boston = d3.json(link, function(data) {
   console.log("neighborhoods initiated");
   // Creating a GeoJSON layer with the retrieved data
@@ -35,7 +35,8 @@ var boston = d3.json(link, function(data) {
 
 
 // SCHOOL MARKERS LAYER
-var schoolpath = "static/data/colleges2.geojson";
+//var schoolpath = "static/data/colleges2.geojson";
+var schoolpath =window.location.origin.concat("/schools");
 console.log("schools initiated");
 
 // var schools = new L.LayerGroup();
@@ -65,8 +66,8 @@ function createMarkers(schoolData) {
 
 // B. Heatmaps
 //-------------------------------------------------- 
-var url1 = "static/data/Noise2.geojson";
-
+//var url1 = "static/data/Noise2.geojson";
+var url1 =window.location.origin.concat("/noise");
 var heat1= d3.json(url1, function(response1) {
   console.log("Noise Heatmap Init");
   console.log(response1);
@@ -87,7 +88,9 @@ var heat1= d3.json(url1, function(response1) {
 });
 
 
-var url2 = "static/data/Trash.geojson";
+//var url2 = "static/data/Trash.geojson";
+//var url2 = "http://127.0.0.1:5000/trash";
+var url2=window.location.origin.concat("/trash");
 var heat2 = d3.json(url2, function(response2) {
   console.log("heatmap_2 initiated");
   console.log(response2);
@@ -109,7 +112,8 @@ var heat2 = d3.json(url2, function(response2) {
   
 });
 
-var url3 = "static/data/RodentsPests.geojson";
+//var url3 = "static/data/RodentsPests.geojson";
+var url3 = window.location.origin.concat("/rodents");;
 var heat3 = d3.json(url3, function(response3) {
   console.log("heatmap_3 initiated");
   console.log(response3);
