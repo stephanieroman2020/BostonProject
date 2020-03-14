@@ -34,31 +34,32 @@ var boston = d3.json(link, function(data) {
 });
 
 
-// // SCHOOL MARKERS LAYER
-// var schoolpath = "static/data/colleges2.geojson";
-// console.log("schools initiated");
+// SCHOOL MARKERS LAYER
+var schoolpath = "static/data/colleges2.geojson";
+console.log("schools initiated");
 
 // var schools = new L.LayerGroup();
-// // Grabbing our GeoJSON data for school markers layer..
-// d3.json(schoolpath, function(schools) {
-//   // Creating a GeoJSON layer with the retrieved data
-//   createMarkers(schools.features);
-//   console.log("schools initiated");
+// Grabbing our GeoJSON data for school markers layer..
+d3.json(schoolpath, function(schools) {
+  // Creating a GeoJSON layer with the retrieved data
+  createMarkers(schools.features);
+  console.log("schools initiated2");
 //   console.log(schools);
 
-// });
-// function createMarkers(schoolData) {
-//   function onEachFeature(feature, layer) {
-//     layer.bindPopup("<h6>" + feature.properties.Name + "</h6>");
-//   }
-//   var schools = L.geoJSON(schoolData, {
-//     onEachFeature: onEachFeature
-//   });
-//   createSchoolMap(schools)
-//   controlLayers.addOverlay(schools, "Schools")
+});
+function createMarkers(schoolData) {
+  function onEachFeature(feature, layer) {
+    layer.bindPopup("<h6>" + feature.properties.Name + "</h6>");
+  }
+  var schools = L.geoJSON(schoolData, {
+    onEachFeature: onEachFeature
+  });
+  // createSchoolMap(schools)
+  controlLayers.addOverlay(schools, "Schools")
 
-//   ;
-// }
+  ;
+}
+
 
 
 
